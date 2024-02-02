@@ -187,6 +187,7 @@ export default function HotelsResult() {
       {pop[`${Object.keys(pop)[0]}`] === true && <div className='filterpopcloser' onClick={() => { setpop({}) }}></div>}
       <div className={`navbaranimate ${trueFinderpop() > 0 ? "animatedown" : "animateup"} flexja`}>
         <div className='upperCenterdivDynamic flexja b1 g5'>
+          <div>
           <div className='hotelInputdynamic flexa g10' onClick={(e) => { closedynamicpop("hotel") }} >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z"></path><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path></svg>
             <input className='inputdynamic' type='text' value={inputvalue} onChange={(e) => { setinputvalue(e.target.value); fetchdataHotelInputFields(e.target.value) }} />
@@ -248,6 +249,7 @@ export default function HotelsResult() {
               <button className='guestsDoneButton' onClick={(e) => { e.stopPropagation(); setnavanimate({ ["room"]: false }) }}>Done</button>
             </div>}
           </div>
+        </div>
         </div>
         <button onClick={() => { setnavanimate({}); navigatecurrentpage(); }}>Update</button>
       </div>

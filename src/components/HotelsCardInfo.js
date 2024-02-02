@@ -16,7 +16,6 @@ export default function HotelsCardInfo() {
   const generalref=useRef();
   const amenitieref=useRef();
   const roomref=useRef();
-  
   const colorrating = useRef([]);
   const colorratinghalf = useRef([]);
   const navigate = useNavigate();
@@ -52,10 +51,15 @@ export default function HotelsCardInfo() {
   }
 
   const scrollhandle=(ele)=>{
+    if(ele.current){
     window.scrollTo({top:ele.current.offsetTop-150,behavior:'smooth'});
+    }
   }
+  
+  window.addEventListener("scroll",scrolleffect)
 
-  window.addEventListener("scroll",()=>{
+  function scrolleffect(){
+    if(roomref.current && amenitieref.current && generalref.current){
     if(window.scrollY>=roomref.current.offsetTop-151){
       colorchanger("rooms");
     }
@@ -65,7 +69,8 @@ export default function HotelsCardInfo() {
     else if(window.scrollY>=generalref.current.offsetTop-151){
       colorchanger("general");
     }
-
+  }
+  if(carddivbuttonroom.current && navdivbuttonroom.current){
     if(window.scrollY>=carddivbuttonroom.current.offsetTop-0){
       navdivbuttonroom.current.style.opacity=1;
     }
@@ -99,7 +104,9 @@ export default function HotelsCardInfo() {
     else{
       navdivbuttonroom.current.style.opacity=0;
     }
-  })
+  }
+
+  }
   
   function fulldetailpagedirectionchanger() {
     setroomcarddetailspop(!roomcarddetailspop)
@@ -178,6 +185,7 @@ export default function HotelsCardInfo() {
   useEffect(() => {
     fetchdataHotelInputFields(cityparam);
     fetchcarddetails;
+
   }, [])
 
   function colorratingmanager(rating) {
@@ -432,12 +440,12 @@ export default function HotelsCardInfo() {
               </div>
             </div>
           </div>
-      <div className='hotelcardinfofooter'>
-        <Footer />
-      </div>
         </div>
       }
       {!loader && <div className="lds-dual-ring"></div>}
+      <div className='hotelcardinfofooter'>
+        <Footer />
+      </div>
     </div>
   )
 }
