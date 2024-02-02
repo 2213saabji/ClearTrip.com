@@ -10,6 +10,10 @@
   width: 97%;
   justify-content: space-between;
 }
+.downnav>div{
+  width: 100%;
+  justify-content: space-around;
+}
 .flightResultMain::-webkit-scrollbar{
   display: none;
 }
@@ -24,6 +28,7 @@
   box-shadow: 1px 1px 10px rgba(211, 211, 211, 0.300);
   width: 100vw;
   height: 120px;
+  padding-bottom: 10px;
 }
 .marginbottomglobal{
   margin-bottom: 30px;
@@ -482,6 +487,22 @@ input:checked + .slider:before {
 
 /* ------------------------media------------------------ */
 
+@media(max-width:1100px){
+  .downnav{
+   flex-direction: column;
+   justify-content: center;
+   gap: 10px;
+  }
+  .navFlightResults{
+    height: 140px;
+    padding-bottom: 10px;
+  }
+
+  .downnav>div{
+    gap: 40px;
+    justify-content: center;
+  }
+}
 @media(max-width:800px){
   .flightResultMain::-webkit-scrollbar{
     display: none;
@@ -492,5 +513,19 @@ input:checked + .slider:before {
     overflow-x: hidden;
     overflow-y: scroll;
   }
+  .MainPageFlightResult{
+    flex-direction: column;
+    width: 93%;
+  padding: 10px 10px;
+  }
+  .leftSortingComp{
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .downnav{
+   width: 100%;
+ 
+   }
 
 }

@@ -263,3 +263,22 @@
     box-sizing: border-box;
   }
 }
+
+@media(max-width:400px){
+  .profilePop {
+    width: 270px;
+    height: 285px;
+  }
+  
+  .profileSelectors {
+    height: 20px;
+    margin-top: 3px;
+    gap: 0px;
+    font-size: 10px;
+    z-index: 100;
+  }
+  .SignoutBtn{
+    padding-bottom: 10px;
+    margin-top: 5px;
+  }
+}

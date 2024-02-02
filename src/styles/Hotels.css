@@ -23,7 +23,7 @@
     color: rgba(0, 0, 0, 0.804);
 }
 .MainHotelFrontPage{
-    width: 69%;
+    width: 100%;
 }
 .HotelsMainPageForm{
     justify-content: space-around;
@@ -103,6 +103,8 @@
     width: 45%;
     padding-left: 10px;
 }
+.HotelsRoomSelectorDiv>p{
+}
 .HotelsPeoplePop{
     position: absolute;
     border: 0.5px solid lightgray;
@@ -163,4 +165,52 @@ stroke: blue;
 .buttondisabled{
     color: black;
     background-color: rgba(128, 128, 128, 0.295);
+}
+
+
+@media(max-width:1290px){
+    .HotelsMainPage{
+        width: 100%;
+    }
+}
+@media(max-width:800px){
+    .HotelsMainPage>div{
+        flex-direction: column;
+    }
+    .sidecarousaldiv{
+        flex-direction: row;
+        gap: 20px;
+    }
+    .sidecarousaldiv .moreOffers{
+        display: none;
+    }
+    .HotelsMainPage{
+        width: 95%;
+        margin-left: 10px;
+    }
+}
+
+@media(max-width:550px){
+    .sidecarousaldiv{
+        flex-direction: column;
+    }
+    .dateOuter{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .dateOuter{
+        height: 120px;
+        gap: 10px;
+    }
+    .datesDiv,.HotelsRoomSelectorDiv{
+        height: 60px;
+        width: 100%;
+    }
+    .HotelsMainFormButtonDiv{
+        display: flex;
+       justify-content: center;
+    }
+    .formInputDiv input::placeholder{
+        font-size:12px;
+    }
 }

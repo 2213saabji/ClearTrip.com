@@ -105,7 +105,7 @@ export default function Hotels() {
             <div className='HotelsMainFormButtonDiv'><button className={`HotelsMainFormButton ${!inputvalue ? "buttondisabled" : ""}`} onClick={() => { navigateToHotelResults() }} disabled={!inputvalue}>Search hotels</button></div>
           </div>
         </div>
-        <div className='flexja flexc'>
+        <div className='flexja flexc sidecarousaldiv'>
           <CarouselHotelFirst />
           <div className='moreOffers flexa'>
             <p>More offers</p>

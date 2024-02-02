@@ -16,6 +16,7 @@ export default function HotelsCardInfo() {
   const generalref=useRef();
   const amenitieref=useRef();
   const roomref=useRef();
+  
   const colorrating = useRef([]);
   const colorratinghalf = useRef([]);
   const navigate = useNavigate();
@@ -431,12 +432,12 @@ export default function HotelsCardInfo() {
               </div>
             </div>
           </div>
-        </div>
-      }
-      {!loader && <div className="lds-dual-ring"></div>}
       <div className='hotelcardinfofooter'>
         <Footer />
       </div>
+        </div>
+      }
+      {!loader && <div className="lds-dual-ring"></div>}
     </div>
   )
 }

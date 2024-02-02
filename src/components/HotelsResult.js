@@ -37,12 +37,16 @@ export default function HotelsResult() {
   const [datego, setdatego] = useState(dateObject);
   const [daygo, setdaygo] = useState(days[dateObject.getDay()]);
   const [monthgo, setmonthgo] = useState(months[dateObject.getMonth()])
+  const [datere,setdatere]=useState(dateObject)
+  const [dayre,setdayre]=useState(days[dateObject.getDay()])
+  const [monthre,setmonthre]=useState(months[dateObject.getMonth()]);
   const [pagination, setpagination] = useState(1);
   const [pop, setpop] = useState({});
   const [toggle, settoggle] = useState(true);
   const [dataa, setdataa] = useState([]);
   const [loader, setloader] = useState(false);
   const [totalelementsforpagination,settotalelementsforpagination]=useState();
+
 
   function filterr() {
     setpop({});
@@ -198,11 +202,11 @@ export default function HotelsResult() {
               <p>{`${datego.getDate()} ${daygo}'${datego.getFullYear().toString().match(/\d{2}$/)[0]}`}</p>
               {navanimate["goingdate"] && <Calendar minDate={new Date()} onChange={(date, e) => { e.stopPropagation(); setnavanimate({ ["goingdate"]: false }); setdatego(date); setdaygo(days[date.getDay()]); setmonthgo(months[date.getMonth()]) }} className="calendarForGoing" />}
             </div>
-            <div className='datecenterline'></div>
-            <div className='dateInputStaticInnerRightdynamic flexja g5' onClick={() => { closedynamicpop("returndate") }} >
-              <p>{`${datego.getDate()} ${daygo}'${datego.getFullYear().toString().match(/\d{2}$/)[0]}`}</p>
-              {navanimate["returndate"] && <Calendar minDate={datego} onChange={(date, e) => { e.stopPropagation(); setnavanimate({ ["returndate"]: false }); }} className="calendarForGoing" />}
-            </div>
+            {/* <div className='datecenterline'></div> */}
+            {/* <div className='dateInputStaticInnerRightdynamic flexja g5' onClick={() => { closedynamicpop("returndate") }} >
+              <p>{`${datere.getDate()} ${dayre}'${datere.getFullYear().toString().match(/\d{2}$/)[0]}`}</p>
+              {navanimate["returndate"] && <Calendar minDate={datego} onChange={(date, e) => { e.stopPropagation(); setnavanimate({ ["returndate"]: false }); setdatere(date); setdayre(days[date.getDay()]); setmonthre(months[date.getMonth()]) }} className="calendarForGoing" />}
+            </div> */}
           </div>
           <div className='roomsAndGuestsdynamic flexja g5' onClick={() => { closedynamicpop("room") }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>
@@ -265,10 +269,10 @@ export default function HotelsResult() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>
                   <p>{dateObject.getDate()} {days[dateObject.getDay()]}'{dateObject.getFullYear().toString().match(/\d{2}$/)[0]}</p>
                 </div>
-                <div className='datecenterline'></div>
+                {/* <div className='datecenterline'></div>
                 <div className='dateInputStaticInnerRightStatic flexja g5' onClick={() => { popupnavanimate("returndate") }}>
                   <p>{dateObject.getDate()} {days[dateObject.getDay()]}'{dateObject.getFullYear().toString().match(/\d{2}$/)[0]}</p>
-                </div>
+                </div> */}
               </div>
               <div className='roomsAndGuestsStatic flexja g5' onClick={() => { popupnavanimate("room") }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>

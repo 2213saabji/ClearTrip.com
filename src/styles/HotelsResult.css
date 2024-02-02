@@ -35,10 +35,14 @@ scale: 1.1;
 .disabledcolor{
     background-color: lightgray !important;
 }
+.HotelsResult::-webkit-scrollbar{
+    display: none;
+  }
 .HotelsResult{
-    position: relative;
     overflow-x: hidden;
+    overflow-y: scroll;
     justify-content: space-between;
+    height: 100vh;
     min-height: 100vh;
 }
 .HotelsResult .loginoutBtn{
@@ -71,10 +75,10 @@ scale: 1.1;
   height: 100%;
 }
 .dateInputStaticInnerLeftStatic,.dateInputStaticInnerRightStatic{
-    width: 50%;
+    width: 100%;
 }
 .dateInputStaticInnerLeftdynamic,.dateInputStaticInnerRightdynamic{
-    width: 50%;
+    width: 100%;
     position: relative;
 }
 .hotelInputStatic{
@@ -99,7 +103,7 @@ scale: 1.1;
     height: 100%;
 }
 .dateInputUpperStatic{
-    width: 42%;
+    width: 30%;
     border-left: 0.5px solid rgba(128, 128, 128, 0.562);
     border-right: 0.5px solid rgba(128, 128, 128, 0.562);
 }
@@ -114,7 +118,7 @@ scale: 1.1;
 }
 .roomsAndGuestsdynamic{
     position: relative;
-    width: 20%;
+    width: 30%;
 }
 .datecenterline{
     height: 20px;
