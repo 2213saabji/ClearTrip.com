@@ -159,7 +159,7 @@ export default function FlightsResult() {
 
     const fetchdataForFlightsMountingPhase = useMemo(async () => {
         try {
-            const response = await (await fetch(`${baseapi}/flight?search={"source":"${flightFrom}","destination":"${flightTo}"}&day=${days[dateObject.getDay()]}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&limit=20&page=1&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`,
+            const response = await (await fetch(`${baseapi}/flight?search={"source":"${flightFrom}","destination":"${flightTo}"}&day=${days[dateObject.getDay()]}&filter={${filter.stops != null ? `"stops":${filter.stops},` : ""}${`"ticketPrice":{"$lte":${valuee}}`},"duration":{"$lte":${tripdurationmax},"$gte":${tripdurationmin}}}&limit=800&page=1&sort={${Object.keys(flightResultsortingnav).length === 0 ? "" : `"${Object.keys(flightResultsortingnav)[0]}":${flightResultsortingnav[`${Object.keys(flightResultsortingnav)[0]}`] == true ? "1" : "-1"}`}}`,
                 {
                     method: "GET",
                     headers: {

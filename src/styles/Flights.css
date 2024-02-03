@@ -257,13 +257,22 @@ span.error {
   border: 1px solid var(--blue);
 }
 
-.peopleClasses {
-  gap: 10px;
+.peopleClasses p {
+  scale: 0.9;
 }
-
+.downClassesdiv{
+  width: 100%;
+}
 .upperClassesdiv {
   justify-content: space-between;
-  width: 350px;
+  width: 100%;
+  scale: 0.8;
+}
+
+.downClassesdiv p {
+  width: 150px;
+  margin-left: 30px;
+  scale: 0.8;
 }
 
 .upperClassesdiv p,
@@ -292,10 +301,6 @@ span.error {
   font-size: 80%;
   font-weight: 600;
   cursor: pointer;
-}
-
-.downClassesdiv p {
-  width: 150px;
 }
 
 .inOutFlight {
@@ -481,6 +486,7 @@ span.error {
 .asidebarFlightPage {
   background-color: white;
   margin-left: 5px;
+  height: 550px;
 }
 
 .moreOffers {
@@ -611,13 +617,19 @@ span.error {
     margin-top: 20px;
   }
 
+
   .flightpage .inOutCombine {
     flex-direction: column;
     border: none;
     justify-content: center;
     align-items: center;
   }
-
+  .peopleChooser{
+    width: 250px;
+  }
+  .peopleClasses{
+    scale: 0.7;
+  }
   .flightSearchform {
     padding: 5px;
     align-items: center;
