@@ -203,6 +203,7 @@ export default function HotelsCardInfo() {
 }
 
   return (
+    <>
     <div className='hotelcardinfo flex flexc'>
       {roomcarddetailspop && <div className='fullinforoomclearner' onClick={() => { fulldetailpagedirectionchanger() }}></div>}
       {Object.keys(sidebardata).length != 0 &&
@@ -443,9 +444,10 @@ export default function HotelsCardInfo() {
         </div>
       }
       {!loader && <div className="lds-dual-ring"></div>}
+    </div>
       <div className='hotelcardinfofooter'>
         <Footer />
       </div>
-    </div>
+      </>
   )
 }

@@ -328,22 +328,22 @@ hr {
 }
   
   .animationrotation1 {
-    animation: animation1 4s ease-in-out infinite;
+    animation: animation1 12s ease-in-out infinite;
 }
 
 .animationrotation2 {
-    animation: animation2 4s ease-in-out infinite;
-    animation-delay: 1s;
-}
-
-.animationrotation3 {
-    animation: animation3 4s ease-in-out infinite;
+    animation: animation2 12s ease-in-out infinite;
     animation-delay: 3s;
 }
 
+.animationrotation3 {
+    animation: animation3 12s ease-in-out infinite;
+    animation-delay: 6s;
+}
+
 .animationrotation4 {
-    animation: animation4 4s ease-in-out infinite;
-    animation-delay: 2s;
+    animation: animation4 12s ease-in-out infinite;
+    animation-delay: 9s;
 }
 
 @keyframes animation1 {
