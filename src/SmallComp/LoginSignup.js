@@ -40,13 +40,13 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
         if (response.status == "fail" && response.message == "User already exists") {
           setexistusererror(true);
         }
-
         if (response.status == "success") {
+          localStorage.setItem("username",JSON.stringify(response.data.user.name));
+          console.log(response);
           localStorage.setItem("token", JSON.stringify(response.token));
           formClose(false);
           settokenAvailability(true);
           setall((prev) => ({ ...prev, ["token"]: response.token }));
-          localStorage.setItem("username",JSON.stringify(response.data.name));
         }
 
       } catch (error) {
@@ -83,14 +83,11 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
           }
         )).json();
         if (response.status == "success") {
-          setall((prev) => ({ ...prev, ["token"]: response.token }));
+          localStorage.setItem("username",JSON.stringify(response.data.name));
           localStorage.setItem("token", JSON.stringify(response.token));
+          setall((prev) => ({ ...prev, ["token"]: response.token }));
           formClose(false);
           settokenAvailability(true);
-          setall((prev) => ({ ...prev, ["token"]: response.token }));
-          localStorage.setItem("username",JSON.stringify(response.data.name));
-
-
         }
         else {
           seterrorlogin(true);
