@@ -8,9 +8,9 @@ import Footer from '../SmallComp/Footer';
 
 export default function Navbar() {
     const { all, setall, username } = useAuthContext();
-    const [logincheck, setlogincheck] = useState(false)
     const [tokenAvailability, settokenAvailability] = useState();
     const [profiletoggle, setprofiletoggle] = useState(false);
+    const [logincheck, setlogincheck] = useState(false)
 
     function checklogin() {
         const token = JSON.parse(localStorage.getItem("token")) || [];
@@ -26,6 +26,7 @@ export default function Navbar() {
     }, [])
 
     function finishtoken() {
+        
         localStorage.removeItem("token");
         settokenAvailability(false);
         checklogin();
