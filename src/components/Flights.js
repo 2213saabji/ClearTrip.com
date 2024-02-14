@@ -107,7 +107,6 @@ export default function Flights() {
   }
 
   useEffect(() => {
-    localStorage.removeItem("username");
     forbuttonDisable();
     dateprintgo();
     dateprintre();

@@ -41,7 +41,6 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
           setexistusererror(true);
         }
         if (response.status == "success") {
-          localStorage.removeItem("username");
           localStorage.setItem("username",JSON.stringify(response.data.user.name));
           console.log(response);
           localStorage.setItem("token", JSON.stringify(response.token));
@@ -84,7 +83,6 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
           }
         )).json();
         if (response.status == "success") {
-          localStorage.removeItem("username");
           localStorage.setItem("username",JSON.stringify(response.data.name));
           localStorage.setItem("token", JSON.stringify(response.token));
           setall((prev) => ({ ...prev, ["token"]: response.token }));
