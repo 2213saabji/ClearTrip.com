@@ -109,7 +109,7 @@ export default function Hotels() {
           <CarouselHotelFirst />
           <div className='moreOffers flexa'>
             <p>More offers</p>
-            <Link to="/"><div>View all</div></Link>
+            <Link to="/under-maintainance"><div>View all</div></Link>
           </div>
           <CarouselHotelSecond />
         </div>

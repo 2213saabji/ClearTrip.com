@@ -10,6 +10,8 @@ import ContextAllDataProvider from './ContextAllData';
 import PaymentBooking from './PaymentBooking';
 import HotelsCardInfo from './HotelsCardInfo';
 import Hotelpayment from '../SmallComp/Hotelpayment';
+import Errorpage from './Errorpage';
+
 
 function App() {
   
@@ -31,6 +33,7 @@ function App() {
         <Route path="/hotels/results/:hotelInfo" element={<HotelsCardInfo/>}/>
         <Route path="/hotels/results/hotelInfo/:info" element={<Hotelpayment/>}/>
         <Route path="/hotels/results/hotelInfo/Info/:paymentBooking" element={<PaymentBooking/>}/>
+        <Route path='/under-maintainance' element={<Errorpage/>}/>
       </Routes>
     </Router>
     </ContextAllDataProvider>

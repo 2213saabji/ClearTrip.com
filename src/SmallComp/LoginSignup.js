@@ -46,6 +46,7 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
           formClose(false);
           settokenAvailability(true);
           setall((prev) => ({ ...prev, ["token"]: response.token }));
+          localStorage.setItem("username",JSON.stringify(response.data.name));
         }
 
       } catch (error) {
@@ -87,6 +88,9 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
           formClose(false);
           settokenAvailability(true);
           setall((prev) => ({ ...prev, ["token"]: response.token }));
+          localStorage.setItem("username",JSON.stringify(response.data.name));
+
+
         }
         else {
           seterrorlogin(true);
@@ -112,7 +116,7 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
         <div className='leftlogin'><CarouselThree /></div>
         <div className='rightlogin flexa flexc'>
           <div className='crossSign'>
-            <svg onClick={() => { formClose(false); setTimeout(() => { checklogin(); }, 20000); }} width="22" height="22" viewBox="0 0 24 24" fill="none" className=" c-pointer c-neutral-900"><path d="M18 6L12 12M12 12L6 18M12 12L6 6M12 12L18 18" stroke="#1A1A1A" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+            <svg onClick={() => { formClose(false); setTimeout(() => { checklogin(); }, 300000); }} width="22" height="22" viewBox="0 0 24 24" fill="none" className=" c-pointer c-neutral-900"><path d="M18 6L12 12M12 12L6 18M12 12L6 6M12 12L18 18" stroke="#1A1A1A" strokeLinecap="round" strokeLinejoin="round"></path></svg>
           </div>
           {pagination ?
             (<form className='flexja flexc loginform' onSubmit={(e) => loginfun(e)}>

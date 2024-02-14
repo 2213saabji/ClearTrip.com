@@ -4,6 +4,12 @@
     overflow: hidden;
     width: 100%;
 }
+.errorpagediv{
+    background-image: url("../../public/img/error.png") ;
+    background-size: 100% 100%;
+    width: 100vw;
+    height: 100vh;
+}
 .colordiv{
     background-color: rgba(186, 222, 244, 0.364);
 }

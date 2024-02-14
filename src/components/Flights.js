@@ -268,7 +268,7 @@ export default function Flights() {
           <Carousel className="flightPageRightTopCarousal" />
           <div className='moreOffers flexa'>
             <p>More offers</p>
-            <Link to="/"><div>View all</div></Link>
+            <Link to="/under-maintainance"><div>View all</div></Link>
           </div>
           <CarouselTwo />
         </div>
