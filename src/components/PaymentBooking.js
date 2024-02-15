@@ -25,7 +25,7 @@ export default function PaymentBooking() {
 
     for (let i = 0; i < input.length; i++) {
       if (i > 0 && i % 4 === 0) {
-        formattedInput += '-';
+        formattedInput += ' ';
       }
       formattedInput += input[i];
     }
@@ -46,7 +46,7 @@ export default function PaymentBooking() {
     setdebiterror(false);
   }
   function errorcardnumber(key){
-    if(!(/^\d{4}-\d{4}-\d{4}-\d{4}$/.test(inputfill[0].value))){
+    if(!(/^\d{4} \d{4} \d{4} \d{4}$/.test(inputfill[0].value))){
     inputfill[key].style.outline="0.5px solid red";
     }
    
@@ -57,7 +57,7 @@ export default function PaymentBooking() {
     if (key==4 && e.target.value.length > 3) {
       e.target.value = e.target.value.slice(0, 3); // Limit input to 3 characters
     }
-    else if(key==2 && e.target.value>2024 || key==2 && e.target.value.length > 4 ){
+    else if(key==2 && e.target.value.length > 4 ){
       // e.target.value = e.target.value.slice(0, 4);
       e.target.value = e.target.value.slice(0, e.target.value.length-1);
 
@@ -89,14 +89,16 @@ export default function PaymentBooking() {
            setdebiterror(true);
            bool=false
           }
-          if(item==2 && inputfill[2].value.length<4){
+          if(item==2 && inputfill[2].value.length<4 || item==2 && inputfill[2].value<2024){
             inputfill[2].style.outline="0.5px solid red";
            bool=false
           }
-          if(item==1 && inputfill[1].value>12 || item==1 && inputfill[1].value==0 ){
+          if(item==1 && inputfill[1].value>12 || item==1 && inputfill[1].value<=0 ){
             inputfill[1].style.outline="0.5px solid red";
            bool=false
           }
+          
+          
         })
         if(bool){
           setdonepayment(true);
