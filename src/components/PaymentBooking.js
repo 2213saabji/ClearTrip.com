@@ -15,11 +15,25 @@ export default function PaymentBooking() {
   const [termserror,settermserror]=useState(false)
   const [upierror,setupierror]=useState(false)
   const [debiterror,setdebiterror]=useState(false);
-
-
-
   const [donepayment, setdonepayment] = useState(false);
   const [pop, setpop] = useState({ "UPI": true });
+  const [cardNumber, setCardNumber] = useState('');
+
+  const handleChange = (e) => {
+    const input = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+    let formattedInput = '';
+
+    for (let i = 0; i < input.length; i++) {
+      if (i > 0 && i % 4 === 0) {
+        formattedInput += '-';
+      }
+      formattedInput += input[i];
+    }
+
+    setCardNumber(formattedInput);
+  };
+
+
   function popp(key) {
     setpop({});
     setpop((prev) => ({ ...prev, [key]: true }))
@@ -31,10 +45,34 @@ export default function PaymentBooking() {
     inputfill[key].style.outline="none";
     setdebiterror(false);
   }
+  function errorcardnumber(key){
+    if(!(/^\d{4}-\d{4}-\d{4}-\d{4}$/.test(inputfill[0].value))){
+    inputfill[key].style.outline="0.5px solid red";
+    }
+   
+    
+  }
+  
+  function maxLengthMaker(e,key){
+    if (key==4 && e.target.value.length > 3) {
+      e.target.value = e.target.value.slice(0, 3); // Limit input to 3 characters
+    }
+    else if(key==2 && e.target.value>2024 || key==2 && e.target.value.length > 4 ){
+      // e.target.value = e.target.value.slice(0, 4);
+      e.target.value = e.target.value.slice(0, e.target.value.length-1);
+
+    }
+    else if(key==1 && e.target.value.length > 2){
+      e.target.value = e.target.value.slice(0, 2);
+    }
+    else if(key==1 && e.target.value>12){
+      e.target.value=e.target.value.slice(0,1);
+    }
+  }
   function paymentdone() {
     if (checkboxRef.current.checked) {
       if (pop["UPI"]) {
-        if(upiinput.current.value==""){
+        if(upiinput.current.value=="" || !(/.+@.+/ .test(upiinput.current.value))){
           upiinput.current.style.outline=`0.5px solid red`
           setupierror(true);
         }
@@ -49,6 +87,14 @@ export default function PaymentBooking() {
           if(inputfill[item].value==""){
             inputfill[item].style.outline=`0.5px solid red`;
            setdebiterror(true);
+           bool=false
+          }
+          if(item==2 && inputfill[2].value.length<4){
+            inputfill[2].style.outline="0.5px solid red";
+           bool=false
+          }
+          if(item==1 && inputfill[1].value>12 || item==1 && inputfill[1].value==0 ){
+            inputfill[1].style.outline="0.5px solid red";
            bool=false
           }
         })
@@ -88,7 +134,7 @@ export default function PaymentBooking() {
                 <div className='paymentcarddiv1result flex flexjsb'>
                   <div className='paymentcarddiv2 flex flexc g10'>
                     <h3>Enter UPI ID</h3>
-                    <input type='text' ref={upiinput} placeholder='Enter your UPI ID' onChange={()=>{setupierror(false);upiinput.current.style.outline=`none`}}></input>
+                    <input type='text'  ref={upiinput} placeholder='Enter your UPI ID' onChange={()=>{setupierror(false);upiinput.current.style.outline=`none`}}></input>
                     {upierror && <span>Please enter a valid UPI ID</span>}
                     <p>Payment request will be sent to the phone no. linked to your UPI ID</p>
                   </div>
@@ -103,16 +149,16 @@ export default function PaymentBooking() {
                 <div className='paymentcarddiv5 flex flexc g10'>
                   <h3>Enter card details</h3>
                   <label>Card number</label>
-                  <input ref={(e) => { inputfill[0] = e }} type='number' placeholder='Enter card number' onChange={()=>{outlineremoval(0)}}></input>
+                  <input ref={(e) => { inputfill[0] = e }} value={cardNumber} maxLength={19} type='text' placeholder='Enter card number' onChange={(e)=>{outlineremoval(0),errorcardnumber(0), handleChange(e)}}></input>
                   <label>Expiry date</label>
                   <div className='flexa g20'>
-                    <input ref={(e) => { inputfill[1] = e }} className='expirydate' type='number' placeholder='Month' onChange={()=>{outlineremoval(1)}}></input>
-                    <input ref={(e) => { inputfill[2] = e }} className='expirydate' type='number' placeholder='Year' onChange={()=>{outlineremoval(2)}}></input>
+                    <input ref={(e) => { inputfill[1] = e }}  className='expirydate' type='number' placeholder='Month' onChange={(e)=>{outlineremoval(1),maxLengthMaker(e,1)}}></input>
+                    <input ref={(e) => { inputfill[2] = e }} max={"2024"}  className='expirydate' type='number' placeholder='Year' onChange={(e)=>{outlineremoval(2),maxLengthMaker(e,2)}}></input>
                   </div>
                   <label>Card holder name</label>
                   <input ref={(e) => { inputfill[3] = e }} type='text' placeholder='Name as on card' onChange={()=>{outlineremoval(3)}}></input>
                   <label>CVV</label>
-                  <input ref={(e) => { inputfill[4] = e }} className='cvvinput' type='number' placeholder='CVV' onChange={()=>{outlineremoval(4)}}></input>
+                  <input ref={(e) => { inputfill[4] = e }} className='cvvinput' type='number' placeholder='CVV' onChange={(e)=>{outlineremoval(4),maxLengthMaker(e,4)}}></input>
                   { debiterror && <span>Please enter all details correctly</span>}
                 </div>
               }
