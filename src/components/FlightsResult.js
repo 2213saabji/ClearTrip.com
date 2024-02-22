@@ -274,9 +274,6 @@ export default function FlightsResult() {
                             <div className='datesGoing flightResultdatesGoing'>{`${flightResultdaygo}, ${flightResultmonthgo} ${flightResultdatego}`}</div>
                             {rotateButton["datego"] && <Calendar minDate={new Date()} onChange={(date) => { setflightResultdatego(date.getDate()); setcalenderdate(date); setflightResultdaygo(days[date.getDay()]); setflightResultmonthgo(months[date.getMonth()]); }} value={flightResultdatego} className="calendarForGoing flightResultcalendarGoing " />}
                         </div>
-                        {/* <div className='flightResultRightDatePicker blur flexa'>
-                            Return
-                        </div> */}
                         <div className='flightResultTraveller flexa' >
                             <div className='travellerdata flexa' onClick={() => { buttonRotate("traveller") }}>{`${travellersCount} Travellers`}</div>
                             <svg onClick={() => { buttonRotate("traveller") }} width="14" height="9" fill="currentColor" className={`t-all ml-3 ${rotateButton["traveller"] ? "rotateButtonzero" : "rotateButtonOneNinty"}`} style={{ color: "rgb(153, 153, 153)", transform: "rotate(-180deg)" }}><g fill="none" fillRule="evenodd"><path d="M15 12H-1V-4h16z"></path><path stroke="#FFF" strokeWidth="0.5" fill="currentColor" d="M11.59 8L7 3.42 2.41 8 1 6.59l6-6 6 6z"></path></g></svg>
@@ -380,12 +377,7 @@ export default function FlightsResult() {
                             <div className={flightResultsortingnav["duration"] ? "activesortingnavColor" : flightResultsortingnav["duration"] == false ? "activesortingnavColor" : null} onClick={() => { sortingnav("duration") }}>Duration &nbsp;{(flightResultsortingnav["duration"] == false && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" style={{ transform: `rotate(${-180}deg)` }}><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}{(flightResultsortingnav["duration"] == true && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" ><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}</div>
                             <div className={flightResultsortingnav["arrivalTime"] ? "activesortingnavColor" : flightResultsortingnav["arrivalTime"] == false ? "activesortingnavColor" : null} onClick={() => { sortingnav("arrivalTime") }}>Arrival &nbsp;{(flightResultsortingnav["arrivalTime"] == false && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" style={{ transform: `rotate(${-180}deg)` }}><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}{(flightResultsortingnav["arrivalTime"] == true && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" ><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}</div>
                             <div className={flightResultsortingnav["ticketPrice"] ? "activesortingnavColor" : flightResultsortingnav["ticketPrice"] == false ? "activesortingnavColor" : null} onClick={() => { sortingnav("ticketPrice") }}>Price &nbsp;{(flightResultsortingnav["ticketPrice"] == false && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" style={{ transform: `rotate(${-180}deg)` }}><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}{(flightResultsortingnav["ticketPrice"] == true && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" ><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}</div>
-                            <div className='flexa'>Smart@ &nbsp;
-                                <label className="switch">
-                                    <input type="checkbox" />
-                                    <span className="slider round"></span>
-                                </label>
-                            </div>
+                            <div style={{width:"100px"}}></div>
                         </nav>
                         <div className='flightResultData'>
                             {dataa.map((item, index) => (filter[`${item.flightID[0]}${item.flightID[1]}`] && <div className='countvisibility'>{count++}</div> && (

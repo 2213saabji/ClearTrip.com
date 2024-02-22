@@ -53,7 +53,8 @@ export default function Hotels() {
           }
         }
       )).json();
-      setdataa(response.data.hotels);
+      const arr=response.data.hotels.map((item)=>{return item.location});
+      setdataa(new Set(arr))
     } catch (error) {
       alert(error);
     }
@@ -73,8 +74,8 @@ export default function Hotels() {
               <input type='text' onClick={() => { Popkey("input"); }} value={inputvalue} onChange={(e) => { setinputvalue(e.target.value); fetchdataHotelInputFields(e.target.value) }} placeholder='Enter locality, landmark, city or hotel' />
               {Pop["input"] && <div className='HotelsInputPopup'>
                 <p className='flexa'>Popular destinations</p>
-                {dataa.map((item,index) => (
-                  <div key={index} className='hotelMainPageInput flexa' onClick={() => { Popkey("input"); setinputvalue(item.location) }}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className="dropdown-new__item-stroke--icon listItemHover"><path strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z" stroke='black'></path><path strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke='black'></path></svg>&nbsp;&nbsp;{item.location}</div>
+                {Array.from(dataa).map(item => (
+                  <div className='hotelMainPageInput flexa' onClick={() => { Popkey("input"); setinputvalue(item) }}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className="dropdown-new__item-stroke--icon listItemHover"><path strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z" stroke='black'></path><path strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke='black'></path></svg>&nbsp;&nbsp;{item}</div>
                 ))}
               </div>}
             </div>

@@ -54,8 +54,8 @@ export default function PaymentBooking() {
   }
   
   function maxLengthMaker(e,key){
-    if (key==4 && e.target.value.length > 3) {
-      e.target.value = e.target.value.slice(0, 3); // Limit input to 3 characters
+    if (key==4 && e.target.value.length > 4) {
+      e.target.value = e.target.value.slice(0, 4); // Limit input to 3 characters
     }
     else if(key==2 && e.target.value.length > 4 ){
       // e.target.value = e.target.value.slice(0, 4);
