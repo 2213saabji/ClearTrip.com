@@ -19,6 +19,7 @@ export default function PaymentBooking() {
   const [pop, setpop] = useState({ "UPI": true });
   const [cardNumber, setCardNumber] = useState('');
 
+  //-------------------card number handler-----------------------
   const handleChange = (e) => {
     const input = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
     let formattedInput = '';
@@ -33,34 +34,42 @@ export default function PaymentBooking() {
     setCardNumber(formattedInput);
   };
 
+  //-----------------------popup manage-----------------------
 
   function popp(key) {
     setpop({});
     setpop((prev) => ({ ...prev, [key]: true }))
   }
+
+  //---------------------terms and conditions handler---------------------
+
   function termscheck(){
       settermserror(false);
   }
+
+  //---------------------outline removal-----------------------
+
   function outlineremoval(key){
     inputfill[key].style.outline="none";
     setdebiterror(false);
   }
+
+  //---------------------card number spacing-------------------------
+
   function errorcardnumber(key){
     if(!(/^\d{4} \d{4} \d{4} \d{4}$/.test(inputfill[0].value))){
     inputfill[key].style.outline="0.5px solid red";
-    }
-   
-    
+    } 
   }
   
+  //--------------------payment inputs formatter---------------------
+
   function maxLengthMaker(e,key){
     if (key==4 && e.target.value.length > 4) {
       e.target.value = e.target.value.slice(0, 4); // Limit input to 3 characters
     }
     else if(key==2 && e.target.value.length > 4 ){
-      // e.target.value = e.target.value.slice(0, 4);
       e.target.value = e.target.value.slice(0, e.target.value.length-1);
-
     }
     else if(key==1 && e.target.value.length > 2){
       e.target.value = e.target.value.slice(0, 2);
@@ -69,6 +78,9 @@ export default function PaymentBooking() {
       e.target.value=e.target.value.slice(0,1);
     }
   }
+
+  //--------------------payment done errors--------------------
+
   function paymentdone() {
     if (checkboxRef.current.checked) {
       if (pop["UPI"]) {

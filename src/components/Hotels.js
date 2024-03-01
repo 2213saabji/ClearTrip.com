@@ -23,10 +23,14 @@ export default function Hotels() {
   const [childrens, setchildrens] = useState(0);
   const [inputvalue, setinputvalue] = useState();
 
+  //--------------------------All popup manage for Home Hotel---------------------
+
   function Popkey(val) {
     setPop({})
     setPop({ [val]: !Pop[val] });
   }
+
+  //-------------------------setting up going date------------------------
 
   function datesetterRe(date) {
     if ((datere.getMonth()) < (date.getMonth()) || ((datere.getMonth()) === (date.getMonth()) && datere.getDate() < date.getDate())) {
@@ -36,12 +40,14 @@ export default function Hotels() {
     }
   }
 
+  //------------------------navigate to next page---------------------------
   function navigateToHotelResults() {
     if (inputvalue != "") {
       navigate(`/hotels/results?location=${inputvalue.match(/^([^,]+)/)[1]}&rooms=${rooms}&adults=${adults}&childrens=${childrens}&date=${datego}`)
     }
   }
 
+  //-----------------------fetch locations(Main api)-----------------------------
   const fetchdataHotelInputFields = async (valuee) => {
     try {
       const response = await (await fetch(`${baseapi}/hotel?search={"location":"${valuee}"}`,

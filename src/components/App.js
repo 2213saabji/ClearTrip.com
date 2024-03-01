@@ -11,8 +11,9 @@ import PaymentBooking from './PaymentBooking';
 import HotelsCardInfo from './HotelsCardInfo';
 import Hotelpayment from '../SmallComp/Hotelpayment';
 import Errorpage from './Errorpage';
+import BookedDetails from './BookedDetails';
 
-
+// ----------------------------------All Routes----------------------------------------
 function App() {
   
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route index element={<Flights/>}/>
         <Route path="/flights"  element={<Flights/>}/>
         <Route path="/hotels" element={<Hotels/>}/>
+        <Route path="/bookeddetails" element={<BookedDetails/>}/>
         </Route>
         <Route path="/flights/:results" element={<Flightsresult/>}/>
         <Route path="/hotels/:results" element={<HotelsResult/>}/>
@@ -42,3 +44,5 @@ function App() {
 }
 
 export default App;
+
+

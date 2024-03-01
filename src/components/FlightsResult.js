@@ -51,11 +51,16 @@ export default function FlightsResult() {
     const [togglecardfulldetails, settogglecardfulldetails] = useState({});
     const [valuee, setvaluee] = useState(2500);
 
+    //------------------------------toggle flights option for filter--------------------------------
+    
     function airlineSelector(key) {
         setTimeout(() => {
             setfilter((prev) => ({ ...prev, [key]: !filter[key] }));
         }, 10);
     }
+
+    //------------------------------toggle flights stops option for filter--------------------------------
+
     function airlineSelectorwithvalue(key, value) {
         setTimeout(() => {
             if (filter[key] == value) {
@@ -68,33 +73,44 @@ export default function FlightsResult() {
 
     }
 
+    //------------------------------flights moreInfo Div popup--------------------------------------
+    
     function togglecarddetails(val) {
         settogglecardfulldetails({})
         settogglecardfulldetails({ [val]: !togglecardfulldetails[val] });
     }
 
+    //------------------------------swap flights--------------------------------------
+    
     function swaplocations() {
         const temp = flightResultIn;
         setflightResultIn(flightResultOut);
         setflightResultOut(temp);
     }
 
+    //------------------------------sorting for flights--------------------------------------
+
     function sortingnav(key) {
         setflightResultsortingnav({})
         setflightResultsortingnav({ [key]: !flightResultsortingnav[key] });
     }
 
-
+    //-----------------------------flight no availability message-------------------------------
+    
     function message() {
         if (count == 0) {
             return <div className='errorMessage flexja'><div className='innererrormessage flexja'><CiCircleInfo className='iconerrormessage' /> &nbsp;No Flights Are Available</div></div>;
         }
     }
+    
+    //------------------------------flight In&Out input value------------------------------
 
     function locationSetterMountingPhase() {
         objdropdowncity.map((item) => (flightFrom == item.name ? setflightResultIn(prev => ({ ...prev, name: item.name, fname: item.fname })) : ""))
         objdropdowncity.map((item) => (flightTo == item.name ? setflightResultOut(prev => ({ ...prev, name: item.name, fname: item.fname })) : ""))
     }
+
+    //----------------------------debouncing for filter flights price----------------------------
 
     const onewayPricewithcomma = (number) => {
         clearTimeout(tl);
@@ -104,31 +120,46 @@ export default function FlightsResult() {
         setonewayPrice(number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))
     };
 
+    //---------------------------price convert comma to integer---------------------------
+    
     const onewayPricewithoutcomma = () => {
         return parseInt(onewayPrice.replace(/,/g, ''), 10);
     }
+    
+    //---------------------------price convert integer to comma---------------------------
 
     function numberwithComma(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
+    //--------------------------rotate button WithRespectTo popup filter Div-----------------------
+
     function buttonRotate(key) {
         setrotateButton({});
         setrotateButton((prev) => ({ ...prev, [key]: !rotateButton[key] }));
     }
+    
+    //--------------------------popup filters div's (hide & show filters)------------------------------
+
     function filterbuttonRotate(key) {
         setfilterPopup((prev) => ({ ...prev, [key]: !filterPopup[key] }));
     }
 
+    //-------------------------popup adustment menubar---------------------
+
     function buttonRotateAllFalse() {
         setrotateButton((prev) => ({ prev: false }));
     }
+
+    //------------------------while logout remove the token------------------------
 
     function finishtoken() {
         localStorage.removeItem("token");
         settokenAvailability(false);
         checklogin();
     }
+
+    //-----------------------navigate to next page---------------------------
 
     function navigateToFlightInfo(_id) {
         if (localStorage.getItem("token")) {
@@ -139,16 +170,17 @@ export default function FlightsResult() {
         }
     }
 
+    //----------------------Self Navigate-------------------------
+
     function forwardRoute() {
         navigate(`/flights/results?flightfrom=${flightResultIn.name}&flightto=${flightResultOut.name}&dayofweek=${calenderdate}`);
         setfunctionCalltoggle(!functionCalltoggle);
     }
 
+    //---------------------token availability checker--------------------
+
     function checklogin() {
         const token = JSON.parse(localStorage.getItem("token")) || [];
-        // if (typeof token == "object") {
-        //     setlogincheck((e) => true);
-        // }
         if (typeof token == "string") {
             settokenAvailability(true)
         }
@@ -156,6 +188,8 @@ export default function FlightsResult() {
     useEffect(() => {
         checklogin();
     }, [])
+
+    //----------------------Fetch data (Main api)-------------------------
 
     const fetchdataForFlightsMountingPhase = useMemo(async () => {
         try {
@@ -322,6 +356,7 @@ export default function FlightsResult() {
                     </div>
                 </div>
             </nav>
+{/* //-------------------------------------Main body for flights and sorting and filters----------------------------------- */}
             {pageLoader &&
                 <div className='MainPageFlightResult flex'>
                     <div className='leftSortingComp flex flexc'>
@@ -370,6 +405,7 @@ export default function FlightsResult() {
                             </div>
                         }
                     </div>
+{/* //-------------------------------------Main body for flights and sorting----------------------------------- */}
                     <div className='FlightResultDataRender'>
                         <nav className='flightResultsortingNav flexa'>
                             <div>Airlines</div>
@@ -379,6 +415,7 @@ export default function FlightsResult() {
                             <div className={flightResultsortingnav["ticketPrice"] ? "activesortingnavColor" : flightResultsortingnav["ticketPrice"] == false ? "activesortingnavColor" : null} onClick={() => { sortingnav("ticketPrice") }}>Price &nbsp;{(flightResultsortingnav["ticketPrice"] == false && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" style={{ transform: `rotate(${-180}deg)` }}><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}{(flightResultsortingnav["ticketPrice"] == true && <svg viewBox="0 0 5 8" fill="currentColor" width="7px" height="12px" ><path d="M0 4.688l2.073.006L2.08 0l.823.013.005 4.679L5 4.695 2.483 8z" fillRule="evenodd"></path></svg>)}</div>
                             <div style={{width:"100px"}}></div>
                         </nav>
+{/* //-------------------------------------Main body for flights----------------------------------- */}
                         <div className='flightResultData'>
                             {dataa.map((item, index) => (filter[`${item.flightID[0]}${item.flightID[1]}`] && <div className='countvisibility'>{count++}</div> && (
                                 <div className='flightResultcardOuter flexja flexc'>
@@ -446,6 +483,7 @@ export default function FlightsResult() {
                     </div>
                 </div>
             }
+            {/* //-------------------------loader------------------------- */}
             {!pageLoader && <div className="lds-dual-ring"></div>}
             <Footer/>
         </div>

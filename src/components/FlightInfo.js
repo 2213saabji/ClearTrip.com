@@ -13,6 +13,28 @@ export default function FlightInfo() {
   let flightid = searchParams.get("flightid");
   let dayOfWeek = searchParams.get("date");
   const dateObject = new Date(dayOfWeek);
+  const { details, setdetails } = detailssStatefun();
+  const [pageLoader, setpageLoader] = useState(false);
+  const [dataa, setdataa] = useState();
+  const [date, setdate] = useState(dateObject.getDate());
+  const [day, setday] = useState(days[dateObject.getDay()]);
+  const [month, setmonth] = useState(months[dateObject.getMonth()]);
+  const [year, setyear] = useState(dateObject.getFullYear());
+  const [phonenumber, setphonenumber] = useState("");
+  const [email, setemail] = useState("");
+  const [errorcontact, seterrorcontact] = useState(false);
+  const [pop, setpop] = useState({});
+  const [switcherform, setswitcherform] = useState(false);
+
+  //-----------------------------toggle for popups-----------------------------------
+
+  function popp(key) {
+    setpop({});
+    setpop((prev) => ({ ...prev, [key]: !pop[key] }));
+  }
+
+  //-----------------------------departureDate maker for Post data-----------------------------------
+  
   function startdate(){
     const departureDate = new Date(dateObject);
     const [hours, minutes] = dataa.departureTime.split(":");
@@ -20,6 +42,8 @@ export default function FlightInfo() {
     
     return departureDate;
   }
+
+  //-----------------------------arrivalDate maker for Post data-----------------------------------
 
   function enddate(){
     const [departureHours, departureMinutes] = dataa.departureTime.split(":");
@@ -38,23 +62,7 @@ export default function FlightInfo() {
     return arrivalDate;
   }
 
-  const { details, setdetails } = detailssStatefun();
-  const [pageLoader, setpageLoader] = useState(false);
-  const [dataa, setdataa] = useState();
-  const [date, setdate] = useState(dateObject.getDate());
-  const [day, setday] = useState(days[dateObject.getDay()]);
-  const [month, setmonth] = useState(months[dateObject.getMonth()]);
-  const [year, setyear] = useState(dateObject.getFullYear());
-  const [phonenumber, setphonenumber] = useState("");
-  const [email, setemail] = useState("");
-  const [errorcontact, seterrorcontact] = useState(false);
-  const [pop, setpop] = useState({});
-  const [switcherform, setswitcherform] = useState(false);
-
-  function popp(key) {
-    setpop({});
-    setpop((prev) => ({ ...prev, [key]: !pop[key] }));
-  }
+  //-----------------------------error handling phonenumber & email to push next step-----------------------------------
 
   function personalInfosenderone(e) {
     e.preventDefault();
@@ -68,9 +76,14 @@ export default function FlightInfo() {
       seterrorcontact(true);
     }
   }
+
+  //-----------------------------user details setter (address,name,gender,country,state)-----------------------------------
+
   function travellerinfo(key, value) {
     setdetails((prev) => ({ ...prev, [key]: value }));
   }
+
+  //-----------------------------booking flight data Send to backend-----------------------------------
 
   const senddata = async () => {
     try {
@@ -93,6 +106,9 @@ export default function FlightInfo() {
             })
           }
         )).json();
+        console.log(flightid);
+        console.log(startdate());
+        console.log(enddate());
       }
     }
     catch (error) {
@@ -100,6 +116,7 @@ export default function FlightInfo() {
     }
   }
 
+  //----------------------------------redirect to next page----------------------------------
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
       navigate(`/flights/results/flightInfo/flightbooking?FirstName="${details.dfname}"&Email="${details.demail}"&amount=${caltotalamout()}`);
@@ -109,6 +126,8 @@ export default function FlightInfo() {
     }
   }
 
+  //-------------------------------error handling of email------------------------------
+  
   function emailerror(e) {
     const inputval = e.target.value;
     const inputele = e.target;
@@ -120,15 +139,23 @@ export default function FlightInfo() {
     }
   }
 
+  //-------------------------------calculate tax for rendering------------------------------
+  
   function taxCalculate() {
     const val = (dataa.ticketPrice * 18) / 100;
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
+
+  //-------------------------------calculate amount for rendering------------------------------
+  
   function caltotalamout() {
     const val = (dataa.ticketPrice * 18) / 100;
     const add = val + dataa.ticketPrice;
     return Math.floor(add).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
+
+  //-------------------------------mobile number error handler------------------------------
+  
   function numbererror(e) {
     const inputValue = e.target.value;
     const inputElement = e.target;
@@ -139,8 +166,11 @@ export default function FlightInfo() {
     } else {
       inputElement.style.outline = "1px solid red";
     }
-
+    
   }
+
+  //-------------------------------fetch flight data(Main function)------------------------------
+
   async function fetchdataforflightcarddetails() {
     try {
       const response = await (await fetch(`${baseapi}/flight/${flightid}`,
@@ -286,10 +316,3 @@ export default function FlightInfo() {
     </div>
   )
 }
-
-
-
-
-// const dateee=new Date();
-// dateee.setHours(8,50);
-// console.log(dateee.toJSON());

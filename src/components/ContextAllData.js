@@ -12,3 +12,4 @@ export default function ContextAllDataProvider({children}) {
   </MyContext.Provider>
   )
 }
+// ----------------------------Global component-----------------------------

@@ -31,11 +31,13 @@ export default function hotelpayment() {
   const [switcherform, setswitcherform] = useState(false);
   const [errortravellerform, seterrortravellerform] = useState(false);
 
+  //-----------------------------toggle for popups-----------------------------------
   function popp(key) {
     setpop({});
     setpop((prev) => ({ ...prev, [key]: !pop[key] }));
   }
 
+  //-----------------------------error handling phonenumber & email to push next step-----------------------------------
   function personalInfosenderone(e) {
     e.preventDefault();
     if (phonenumber.length == 10 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -51,6 +53,8 @@ export default function hotelpayment() {
   function travellerinfo(key, value) {
     setdetails((prev) => ({ ...prev, [key]: value }));
   }
+
+  //-----------------------------booking flight data Send to backend-----------------------------------
 
   const senddata = async () => {
     try {
@@ -81,6 +85,8 @@ export default function hotelpayment() {
     }
   }
 
+  //----------------------------------redirect to next page----------------------------------
+
   function gotopayment() {
     if (details.dnumber && details.demail && details.dfname && details.dlname && details.dgender && details.dcountry && details.dstate && details.dbillingAddress) {
       const amount = caltotalamout();
@@ -90,6 +96,8 @@ export default function hotelpayment() {
       seterrortravellerform(true);
     }
   }
+
+  //-------------------------------error handling of email------------------------------
 
   function emailerror(e) {
     const inputval = e.target.value;
@@ -101,6 +109,8 @@ export default function hotelpayment() {
       inputele.style.outline = "none"
     }
   }
+
+  //-------------------------------mobile number error handler------------------------------
 
   function numbererror(e) {
     const inputValue = e.target.value;
@@ -114,14 +124,15 @@ export default function hotelpayment() {
     }
   }
 
+  //-------------------------------calculate amount for rendering------------------------------
+
   function caltotalamout() {
     const val = ((dataa.rooms[roomno].costDetails.baseCost) * (adults + childrens));
     const add = val + dataa.rooms[roomno].price + dataa.rooms[roomno].costDetails.taxesAndFees;
     return add.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
 
-
-
+  //-------------------------------fetch hotel data(Main function)------------------------------
 
   const fetchcarddetails = useMemo(async () => {
     try {
@@ -150,6 +161,9 @@ export default function hotelpayment() {
   useEffect(() => {
     fetchcarddetails;
   }, [])
+
+  //---------------------rating with colors----------------------
+  
   function colorratingmanager(rating) {
     let count = 1;
     while (count <= rating && colorrating[count - 1]) {
@@ -185,7 +199,7 @@ export default function hotelpayment() {
                     <div className='hotelpaymentstar'>{dataa.amenities.length}-star hotel in {dataa.location.match(/^([^,]+)/)[1]}</div>
                     <h1>{dataa.name}&nbsp;-&nbsp;{dataa.location.match(/^([^,]+)/)[1]}</h1>
                     <span className='flexa'>
-                      {(dataa.rating == 5 || dataa.rating == 4 || dataa.rating == 3 || dataa.rating == 2 || dataa.rating == 1) ? `${dataa.rating}.0` : dataa.rating}/5
+                      {Number.isInteger(dataa.rating) ? `${dataa.rating}.0` : dataa.rating}/5
                       &nbsp; &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" fill="none" viewBox="0 0 18 12" className="hotelcardinfo-ownlogo"><path fill="#1a1a1a" d="M16.603 3.717L18 2.202h-3.097a9.696 9.696 0 00-10.886 0H.912l1.397 1.515A4.257 4.257 0 00.914 6.676a4.243 4.243 0 001.121 3.072 4.269 4.269 0 002.977 1.373 4.283 4.283 0 003.075-1.137l1.369 1.485 1.368-1.483a4.26 4.26 0 002.9 1.133 4.264 4.264 0 004.271-4.256 4.234 4.234 0 00-1.392-3.146zM5.186 9.742a2.896 2.896 0 01-2.67-1.778 2.871 2.871 0 01.627-3.138 2.892 2.892 0 013.148-.624 2.887 2.887 0 011.784 2.66A2.872 2.872 0 017.229 8.9a2.89 2.89 0 01-2.043.843zm4.27-2.963c0-1.895-1.384-3.521-3.207-4.217a8.361 8.361 0 016.413 0c-1.823.696-3.206 2.322-3.206 4.217zm4.268 2.963a2.896 2.896 0 01-2.669-1.778 2.872 2.872 0 01.626-3.138 2.892 2.892 0 013.15-.624 2.887 2.887 0 011.783 2.66c0 .764-.305 1.497-.847 2.037a2.894 2.894 0 01-2.043.843zm0-4.39a1.518 1.518 0 00-1.399.933 1.504 1.504 0 00.328 1.645 1.516 1.516 0 002.586-1.068c0-.4-.16-.784-.444-1.067a1.517 1.517 0 00-1.07-.442zM6.7 6.863a1.506 1.506 0 01-.935 1.395 1.52 1.52 0 01-1.65-.327 1.508 1.508 0 011.07-2.577 1.518 1.518 0 011.401.931c.076.184.115.38.115.578z"></path></svg>
                       &nbsp;&nbsp;
                       <div className='hotelcardinfo-colorrating' ref={(e) => { colorrating[0] = e }}><div className='hotelcardinfo-colorratinghalf' ref={(e) => { colorratinghalf[0] = e }}></div></div>

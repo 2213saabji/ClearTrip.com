@@ -36,6 +36,7 @@ export default function Flights() {
   const [datePop, setdatePop] = useState({ go: false, re: false })
   const [samefield,setsamefield]=useState(false);
   
+  // -------------------------------Going Date manager------------------------------------
   function dateprintgo() {
     setdaygo(daysOfWeek[datego.getDay()]);
     setmonthgo(months[datego.getMonth()]);
@@ -47,6 +48,8 @@ export default function Flights() {
     }
   }
 
+  // -------------------------------Return Date manager------------------------------------
+  
   function dateprintre() {
     if (activeReDate) {
       setdayre(daysOfWeek[datere.getDay()])
@@ -54,12 +57,16 @@ export default function Flights() {
     }
   }
 
+  // -------------------------------Push to next Page------------------------------------
+  
   function getFlights() {
     if (flightIn && flightOut) {
       navigate(`/flights/results?flightfrom=${flightIndata.name}&flightto=${flightOutdata.name}&dayofweek=${datego}`);
     }
   }
 
+  // -------------------------------Swap FlightIn and FlightOut------------------------------------
+  
   function reverseInput() {
     const fi = flightIn;
     const fo = flightOut;
@@ -67,7 +74,10 @@ export default function Flights() {
     setflightOut(fi);
   }
 
+  // -------------------------------Multi Things Handler------------------------------------
+
   function forbuttonDisable() {
+    //-----------------------------color changer of fares-----------------------------------
     {
       Object.keys(objfares).map((item) => {
         document.getElementsByClassName(objfares[item])[0].style.color = "black";
@@ -78,6 +88,7 @@ export default function Flights() {
       document.getElementsByClassName(`${fare}`)[0].style.border = "1px solid #3366CC";
       document.getElementsByClassName(`${fare}`)[0].style.backgroundColor = "#3366cc19";
     }
+    //------------------------To Check flight in&out should not same------------------------
     {
       if(flightIn==flightOut && flightIn!=""&&flightOut!=""){
         setsamefield(true);
@@ -86,6 +97,7 @@ export default function Flights() {
       }
     }
     if (rotateButtonPeople) {
+      //-----------------------------color changer of passengersCount Buttons-----------------------------------
       {
         const minbutton = document.getElementsByClassName("min")[0];
         const minnbutton = document.getElementsByClassName("min")[1];
@@ -94,7 +106,7 @@ export default function Flights() {
         children == 0 ? (minnbutton.style.color = "gray", minnbutton.style.border = "1px solid gray") : (minnbutton.style.color = "#3366CC", minnbutton.style.border = "1px solid #3366CC");
         infant == 0 ? (minnnbutton.style.color = "gray", minnnbutton.style.border = "1px solid gray") : (minnnbutton.style.color = "#3366CC", minnnbutton.style.border = "1px solid #3366CC");
       }
-
+    //-----------------------------color changer of class of seats-----------------------------------
       {
         Object.keys(objcolor).map((item) => {
           document.getElementsByClassName(objcolor[item])[0].style.color = "black";

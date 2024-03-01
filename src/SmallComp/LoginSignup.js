@@ -18,6 +18,8 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
   const [errorlogin, seterrorlogin] = useState(false);
   const [existusererror, setexistusererror] = useState(false);
 
+  //--------------------------signup api and signup handler---------------------------
+
   const signupfun = async (e) => {
     e.preventDefault(e);
     if (signName && signEmail && signPassword && signgender) {
@@ -61,8 +63,9 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
     else {
       seterror(true)
     }
-
   }
+
+  //--------------------------signIn api and signIn handler---------------------------
 
   const loginfun = async (e) => {
     e.preventDefault(e);
@@ -102,10 +105,7 @@ export default function LoginSignup({ settokenAvailability, checklogin, formClos
     else {
       seterror(true);
     }
-
   }
-
-
 
   return (
     <div className='loginBackBlur'>

@@ -7,3 +7,5 @@ export default function Errorpage() {
     </div>
   )
 }
+
+// -------------------------------Error Page Route Component-------------------------------------

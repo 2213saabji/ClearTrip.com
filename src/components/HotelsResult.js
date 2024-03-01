@@ -8,7 +8,7 @@ import Calendar from 'react-calendar';
 import MultiRangeSlider from "multi-range-slider-react";
 import HotelsResultCardsCarousal from "../SmallComp/HotelsResultCardsCarousal";
 import Footer from "../SmallComp/Footer";
-import { months,days,detailsStatefun,filterStatefun,baseapi } from './Constant';
+import { months, days, detailsStatefun, filterStatefun, baseapi } from './Constant';
 
 
 
@@ -23,10 +23,10 @@ export default function HotelsResult() {
   let childrens = JSON.parse(searchParams.get("childrens"));
   let rooms = searchParams.get("rooms");
   const dateObject = new Date(dayOfWeek);
-  
+
   const { all, setall } = useAuthContext();
-  const {filter,setfilter}=filterStatefun();
-  const {details,setdetails}=detailsStatefun();
+  const { filter, setfilter } = filterStatefun();
+  const { details, setdetails } = detailsStatefun();
   const [tokenAvailability, settokenAvailability] = useState();
   const [logincheck, setlogincheck] = useState(false)
   const [searchhoteldata, setsearchhoteldata] = useState();
@@ -37,32 +37,44 @@ export default function HotelsResult() {
   const [datego, setdatego] = useState(dateObject);
   const [daygo, setdaygo] = useState(days[dateObject.getDay()]);
   const [monthgo, setmonthgo] = useState(months[dateObject.getMonth()])
-  const [datere,setdatere]=useState(dateObject)
-  const [dayre,setdayre]=useState(days[dateObject.getDay()])
-  const [monthre,setmonthre]=useState(months[dateObject.getMonth()]);
+  const [datere, setdatere] = useState(dateObject)
+  const [dayre, setdayre] = useState(days[dateObject.getDay()])
+  const [monthre, setmonthre] = useState(months[dateObject.getMonth()]);
   const [pagination, setpagination] = useState(1);
   const [pop, setpop] = useState({});
   const [toggle, settoggle] = useState(true);
   const [dataa, setdataa] = useState([]);
   const [loader, setloader] = useState(false);
-  const [totalelementsforpagination,settotalelementsforpagination]=useState();
+  const [totalelementsforpagination, settotalelementsforpagination] = useState();
 
-
+  //------------------------To apply filters-------------------------
+  
   function filterr() {
     setpop({});
     settoggle(!toggle);
   }
+
+  //------------------------popups filters divs-------------------------
+  
   function popp(key) {
     setpop({});
     setpop({ [key]: !pop[key] })
   }
+
+  //------------------------filter max value setter-------------------------
+
   function maxrangesetter(value) {
     setfilter((prev) => ({ ...prev, ["pricehigh"]: value }));
   }
 
+  //------------------------filter min value setter-------------------------
+  
   function minrangesetter(value) {
     setfilter((prev) => ({ ...prev, ["pricelow"]: value }));
   }
+
+  //------------------------filter chooser-------------------------
+  
   function filterchanger(key, value) {
     if (value == filter[key]) {
       setfilter((prev) => ({ ...prev, [key]: "" }));
@@ -71,6 +83,9 @@ export default function HotelsResult() {
       setfilter((prev) => ({ ...prev, [key]: value }));
     }
   }
+
+  //------------------------filter chooser for rating-------------------------
+  
   function filterchangerforrating(key, value) {
     if (value == filter[key]) {
       setfilter((prev) => ({ ...prev, [key]: "1" }));
@@ -80,19 +95,29 @@ export default function HotelsResult() {
     }
   }
 
+  //------------------------guests calculator-------------------------
+  
   function guestscalc(key1, key2) {
-    key1 == "increase" ? setdetails((prev) => ({ ...prev, [key2]: details[key2] + 1 })) : setdetails((prev) => ({ ...prev, [key2]: details[key2] - 1 }));
+    key1 == "increase" ? 
+    setdetails((prev) => ({ ...prev, [key2]: details[key2] + 1 })) : 
+    setdetails((prev) => ({ ...prev, [key2]: details[key2] - 1 }));
   }
 
+  //------------------------popup for nav bar-------------------------
+  
   function popupnavanimate(key) {
     setnavanimate({});
     setnavanimate((prev) => ({ ...prev, [key]: !navanimate[key] }));
   }
 
+  //------------------------popup for nav bar-------------------------
+  
   function closedynamicpop(key) {
     setnavanimate((prev) => ({ [prev]: false }))
     setnavanimate((prev) => ({ ...prev, [key]: true }))
   }
+  
+  //------------------------blackscreen navbar-------------------------
 
   function trueFinderpop() {
     if (Object.keys(navanimate).length === 0) {
@@ -103,24 +128,31 @@ export default function HotelsResult() {
     }
   }
 
+  //-----------------------Delete token from localStorage-----------------------
+
   function finishtoken() {
     localStorage.removeItem("token");
     settokenAvailability(false);
     checklogin();
   }
 
+  //-----------------------check Availability of token--------------------------
+
   function checklogin() {
     const token = JSON.parse(localStorage.getItem("token")) || [];
-    // if (typeof token === "object") {
-    //   setlogincheck((e) => true);
-    // }
     if (typeof token === "string") {
       settokenAvailability(true)
     }
   }
+
+  //----------------------Self Navigation---------------------
+  
   function navigatecurrentpage() {
     navigate(`/hotels/results?location=${inputvalue.match(/^([^,]+)/)[1]}&rooms=${details.room}&adults=${details.adults}&childrens=${details.children}&date=${datego}`)
   }
+
+  //----------------------Navigation to next page---------------------
+
   function navigatecardinfo(hotel_id) {
     if (localStorage.getItem("token")) {
       navigate(`/hotels/results/hotelInfo?hotel_id=${hotel_id}&location=${cityparam}&rooms=${details.room}&adults=${details.adults}&childrens=${details.children}&date=${dateObject}`)
@@ -129,6 +161,9 @@ export default function HotelsResult() {
       setlogincheck(true);
     }
   }
+
+  //----------------------Fetch hotel locations for Navbar----------------------
+
   const fetchdataHotelInputFields = async (valuee) => {
     try {
       const response = await (await fetch(`${baseapi}/hotel?search={"location":"${valuee}"}`,
@@ -145,6 +180,9 @@ export default function HotelsResult() {
       alert(error);
     }
   }
+
+  //------------------------Self Sorting-------------------------
+
   function sortingincreaseordecrease(value) {
     if (filter.pricehighlow == "") {
       return value;
@@ -156,6 +194,9 @@ export default function HotelsResult() {
       return value.sort((a, b) => a.avgCostPerNight - b.avgCostPerNight);
     }
   }
+
+  //---------------------Fetch Hotels data(Main api)----------------------
+  
   const fetchMaindataHotels = useMemo(async () => {
     try {
       setloader(false);
@@ -174,7 +215,7 @@ export default function HotelsResult() {
     } catch (error) {
       alert(error);
     }
-  }, [toggle, cityparam,pagination])
+  }, [toggle, cityparam, pagination])
 
   useEffect(() => {
     fetchdataHotelInputFields("");
@@ -188,68 +229,68 @@ export default function HotelsResult() {
       <div className={`navbaranimate ${trueFinderpop() > 0 ? "animatedown" : "animateup"} flexja`}>
         <div className='upperCenterdivDynamic flexja b1 g5'>
           <div>
-          <div className='hotelInputdynamic flexa g10' onClick={(e) => { closedynamicpop("hotel") }} >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z"></path><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path></svg>
-            <input className='inputdynamic' type='text' value={inputvalue} onChange={(e) => { setinputvalue(e.target.value); fetchdataHotelInputFields(e.target.value) }} />
-            {navanimate["hotel"] && <div className='popdynamichotelInput' onClick={(e) => { e.stopPropagation() }}>
-              {searchhoteldata.map((item) => (
-                <div className='hotelMainPageInput flexa' onClick={(e) => { e.stopPropagation(); setnavanimate({ ["hotel"]: false }); setinputvalue(item.location) }}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className="dropdown-new__item-stroke--icon listItemHover"><path strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z" stroke='black'></path><path strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke='black'></path></svg>&nbsp;&nbsp;{item.location}</div>
-              ))}
-            </div>}
-          </div>
-          <div className='dateInputUpperdynamic flexa'>
-            <div className='dateInputStaticInnerLeftdynamic flexja g5' onClick={() => { closedynamicpop("goingdate") }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>
-              <p>{`${datego.getDate()} ${daygo}'${datego.getFullYear().toString().match(/\d{2}$/)[0]}`}</p>
-              {navanimate["goingdate"] && <Calendar minDate={new Date()} onChange={(date, e) => { e.stopPropagation(); setnavanimate({ ["goingdate"]: false }); setdatego(date); setdaygo(days[date.getDay()]); setmonthgo(months[date.getMonth()]) }} className="calendarForGoing" />}
+            <div className='hotelInputdynamic flexa g10' onClick={(e) => { closedynamicpop("hotel") }} >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z"></path><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path></svg>
+              <input className='inputdynamic' type='text' value={inputvalue} onChange={(e) => { setinputvalue(e.target.value); fetchdataHotelInputFields(e.target.value) }} />
+              {navanimate["hotel"] && <div className='popdynamichotelInput' onClick={(e) => { e.stopPropagation() }}>
+                {searchhoteldata.map((item) => (
+                  <div className='hotelMainPageInput flexa' onClick={(e) => { e.stopPropagation(); setnavanimate({ ["hotel"]: false }); setinputvalue(item.location) }}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className="dropdown-new__item-stroke--icon listItemHover"><path strokeLinecap="round" strokeLinejoin="round" d="M20 10.182C20 16.546 12 22 12 22s-8-5.454-8-11.818c0-2.17.843-4.251 2.343-5.786A7.91 7.91 0 0 1 12 2c2.122 0 4.157.862 5.657 2.396A8.277 8.277 0 0 1 20 10.182Z" stroke='black'></path><path strokeLinecap="round" strokeLinejoin="round" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke='black'></path></svg>&nbsp;&nbsp;{item.location}</div>
+                ))}
+              </div>}
             </div>
-            {/* <div className='datecenterline'></div> */}
-            {/* <div className='dateInputStaticInnerRightdynamic flexja g5' onClick={() => { closedynamicpop("returndate") }} >
+            <div className='dateInputUpperdynamic flexa'>
+              <div className='dateInputStaticInnerLeftdynamic flexja g5' onClick={() => { closedynamicpop("goingdate") }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>
+                <p>{`${datego.getDate()} ${daygo}'${datego.getFullYear().toString().match(/\d{2}$/)[0]}`}</p>
+                {navanimate["goingdate"] && <Calendar minDate={new Date()} onChange={(date, e) => { e.stopPropagation(); setnavanimate({ ["goingdate"]: false }); setdatego(date); setdaygo(days[date.getDay()]); setmonthgo(months[date.getMonth()]) }} className="calendarForGoing" />}
+              </div>
+              {/* <div className='datecenterline'></div> */}
+              {/* <div className='dateInputStaticInnerRightdynamic flexja g5' onClick={() => { closedynamicpop("returndate") }} >
               <p>{`${datere.getDate()} ${dayre}'${datere.getFullYear().toString().match(/\d{2}$/)[0]}`}</p>
               {navanimate["returndate"] && <Calendar minDate={datego} onChange={(date, e) => { e.stopPropagation(); setnavanimate({ ["returndate"]: false }); setdatere(date); setdayre(days[date.getDay()]); setmonthre(months[date.getMonth()]) }} className="calendarForGoing" />}
             </div> */}
+            </div>
+            <div className='roomsAndGuestsdynamic flexja g5' onClick={() => { closedynamicpop("room") }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>
+              <p>{details["room"]} room, {details["adults"] + details["children"]} guests</p>
+              {navanimate["room"] && <div className='roomPopDynamic flexa flexc g20'>
+                <div className='flexa'>
+                  <div>
+                    <h4>Rooms</h4>
+                    <p>AC rooms</p>
+                  </div>
+                  <div className='buttondivguests flexa'>
+                    <button className={details["room"] == 1 ? "opacitydecrease" : ""} onClick={() => { guestscalc("decrease", "room") }} disabled={details["room"] == 1}>-</button>
+                    <span>{details["room"]}</span>
+                    <button className={details["children"] + details["adults"] == details["room"] ? "opacitydecrease" : ""} onClick={() => { guestscalc("increase", "room") }} disabled={details["children"] + details["adults"] == details["room"]}>+</button>
+                  </div>
+                </div>
+                <div className='flexa'>
+                  <div>
+                    <h4>Adults over 12 Years</h4>
+                    <p>12+ years</p>
+                  </div>
+                  <div className='buttondivguests flexa'>
+                    <button className={details["adults"] == 1 ? "opacitydecrease" : ""} onClick={() => { guestscalc("decrease", "adults") }} disabled={details["adults"] == 1}>-</button>
+                    <span>{details["adults"]}</span>
+                    <button onClick={() => { guestscalc("increase", "adults") }}>+</button>
+                  </div>
+                </div>
+                <div className='flexa'>
+                  <div>
+                    <h4>Children</h4>
+                    <p>1 - 11 years</p>
+                  </div>
+                  <div className='buttondivguests flexa'>
+                    <button className={details["children"] == 0 ? "opacitydecrease" : ""} onClick={() => { guestscalc("decrease", "children") }} disabled={details["children"] == 0}>-</button>
+                    <span>{details["children"]}</span>
+                    <button onClick={() => { guestscalc("increase", "children") }} disabled={details["children"] == details["adults"]}>+</button>
+                  </div>
+                </div>
+                <button className='guestsDoneButton' onClick={(e) => { e.stopPropagation(); setnavanimate({ ["room"]: false }) }}>Done</button>
+              </div>}
+            </div>
           </div>
-          <div className='roomsAndGuestsdynamic flexja g5' onClick={() => { closedynamicpop("room") }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className=""><path stroke="gray" strokeLinecap="round" strokeLinejoin="round" d="M16 2v4M8 2v4m-5 4h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"></path></svg>
-            <p>{details["room"]} room, {details["adults"] + details["children"]} guests</p>
-            {navanimate["room"] && <div className='roomPopDynamic flexa flexc g20'>
-              <div className='flexa'>
-                <div>
-                  <h4>Rooms</h4>
-                  <p>AC rooms</p>
-                </div>
-                <div className='buttondivguests flexa'>
-                  <button className={details["room"] == 1 ? "opacitydecrease" : ""} onClick={() => { guestscalc("decrease", "room") }} disabled={details["room"] == 1}>-</button>
-                  <span>{details["room"]}</span>
-                  <button className={details["children"] + details["adults"] == details["room"] ? "opacitydecrease" : ""} onClick={() => { guestscalc("increase", "room") }} disabled={details["children"] + details["adults"] == details["room"]}>+</button>
-                </div>
-              </div>
-              <div className='flexa'>
-                <div>
-                  <h4>Adults over 12 Years</h4>
-                  <p>12+ years</p>
-                </div>
-                <div className='buttondivguests flexa'>
-                  <button className={details["adults"] == 1 ? "opacitydecrease" : ""} onClick={() => { guestscalc("decrease", "adults") }} disabled={details["adults"] == 1}>-</button>
-                  <span>{details["adults"]}</span>
-                  <button onClick={() => { guestscalc("increase", "adults") }}>+</button>
-                </div>
-              </div>
-              <div className='flexa'>
-                <div>
-                  <h4>Children</h4>
-                  <p>1 - 11 years</p>
-                </div>
-                <div className='buttondivguests flexa'>
-                  <button className={details["children"] == 0 ? "opacitydecrease" : ""} onClick={() => { guestscalc("decrease", "children") }} disabled={details["children"] == 0}>-</button>
-                  <span>{details["children"]}</span>
-                  <button onClick={() => { guestscalc("increase", "children") }} disabled={details["children"] == details["adults"]}>+</button>
-                </div>
-              </div>
-              <button className='guestsDoneButton' onClick={(e) => { e.stopPropagation(); setnavanimate({ ["room"]: false }) }}>Done</button>
-            </div>}
-          </div>
-        </div>
         </div>
         <button onClick={() => { setnavanimate({}); navigatecurrentpage(); }}>Update</button>
       </div>
@@ -287,7 +328,7 @@ export default function HotelsResult() {
               <nav className='navUpperHome'>
                 {!tokenAvailability && <button className='loginoutBtn' onClick={() => setlogincheck(true)}>Log in / Sign up</button>}
                 {tokenAvailability && <button className='profileBtn flexja' onClick={(e) => { setprofiletoggle(!profiletoggle) }} ><svg viewBox="0 0 14 14" height="16px" width="16px" className="c-inherit"><g fill="none" fillRule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><circle cx="7" cy="7" r="6.25" stroke="currentColor" strokeWidth="1.5"></circle><path fill="currentColor" d="M3,5 C4.38071187,5 5.5,3.88071187 5.5,2.5 C5.5,1.11928813 4.38071187,0 3,0 C1.61928813,0 0.5,1.11928813 0.5,2.5 C0.5,3.88071187 1.61928813,5 3,5 Z" transform="matrix(-1 0 0 1 10 3)"></path><path fill="currentColor" d="M7,9 C9.14219539,9 10.8910789,10.6839685 10.9951047,12.8003597 L11,13 L3,13 C3,10.790861 4.790861,9 7,9 Z"></path><circle cx="7" cy="7" r="7.75" stroke="#FFF" strokeWidth="1.5"></circle></g></svg>
-                {JSON.parse(localStorage.getItem("username"))}
+                  {JSON.parse(localStorage.getItem("username"))}
                   {profiletoggle &&
                     <div className='profilePop flexja flexc'>
 
@@ -342,7 +383,7 @@ export default function HotelsResult() {
                 <div className='flexa g10' onClick={() => { filterchanger("stars", "4") }}><div className='relativecolorinput'><div className={`absolutecolordiv flexja ${filter["stars"] == "4" ? "blackbackground" : ""}`}><div></div></div></div><p>4-star hotels</p></div>
                 <div className='flexa g10' onClick={() => { filterchanger("stars", "5") }}><div className='relativecolorinput'><div className={`absolutecolordiv flexja ${filter["stars"] == "5" ? "blackbackground" : ""}`}><div></div></div></div><p>5-star hotels</p></div>
                 <div className='flexa g10' onClick={() => { filterchanger("stars", "6") }}><div className='relativecolorinput'><div className={`absolutecolordiv flexja ${filter["stars"] == "6" ? "blackbackground" : ""}`}><div></div></div></div><p>6-star hotels</p></div>
-                </div>}
+              </div>}
             </div>
             <div className="hotelsresult-guestrating flexa" onClick={() => { popp("guestrating") }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7.1" stroke="#1A1A1A" strokeWidth="0.8"></circle><path d="M6.54626 10.6369C6.49483 10.6695 6.42957 10.6239 6.44262 10.5644L6.80371 8.91793C6.81656 8.85936 6.79731 8.79837 6.75317 8.75778L5.53079 7.63381C5.48709 7.59363 5.51168 7.52069 5.57077 7.51515L7.16572 7.36572C7.22822 7.35986 7.28228 7.31975 7.30601 7.26164L7.93616 5.71834C7.95939 5.66144 8.04001 5.66154 8.0631 5.71851L8.69403 7.27518C8.71767 7.3335 8.77183 7.37379 8.83449 7.37966L10.4274 7.5289C10.4866 7.53445 10.5111 7.60773 10.4671 7.64779L9.24747 8.75767C9.20296 8.79818 9.18343 8.85936 9.19624 8.91817L9.55739 10.5764C9.57038 10.636 9.50474 10.6816 9.45338 10.6486L8.09073 9.77238C8.03551 9.73688 7.96471 9.73667 7.90928 9.77184L6.54626 10.6369ZM5.63153 11.2922C5.56475 11.5931 5.89497 11.8248 6.15523 11.6595L7.96327 10.5115C7.98569 10.4972 8.01431 10.4972 8.03673 10.5115L9.84477 11.6595C10.105 11.8248 10.4352 11.5931 10.3685 11.2922L9.8815 9.09716C9.87618 9.07319 9.88409 9.04821 9.90224 9.03168L11.5367 7.54209C11.7592 7.33927 11.6348 6.96866 11.3349 6.94128L9.2023 6.74661C9.17673 6.74427 9.1546 6.72783 9.14499 6.70401L8.32114 4.66226C8.20455 4.3733 7.79546 4.3733 7.67886 4.66226L6.85501 6.70401C6.8454 6.72783 6.82327 6.74427 6.7977 6.74661L4.66509 6.94128C4.36523 6.96866 4.24076 7.33927 4.46331 7.54209L6.09776 9.03168C6.11591 9.04821 6.12382 9.07319 6.1185 9.09716L5.63153 11.2922Z" fill="#1A1A1A" stroke="#1A1A1A" strokeWidth="0.1"></path></svg>
@@ -376,7 +417,7 @@ export default function HotelsResult() {
           loader && (
             dataa.length > 0 && (
               <div className='hotelsresult-rendergrid flexja flexc'>
-                {dataa.map((item, index) => (filter["pricehigh"] > item.avgCostPerNight && filter["pricelow"] < item.avgCostPerNight && (filter["stars"]!="" ? filter["stars"]==item.amenities.length : true)  && (
+                {dataa.map((item, index) => (filter["pricehigh"] > item.avgCostPerNight && filter["pricelow"] < item.avgCostPerNight && (filter["stars"] != "" ? filter["stars"] == item.amenities.length : true) && (
                   <div key={index} className='hotelsresult-card' onClick={() => { navigatecardinfo(item._id) }}>
                     <div className='img'><HotelsResultCardsCarousal data={item.images} /></div>
                     <div className='flex flexc g10'>
@@ -406,14 +447,14 @@ export default function HotelsResult() {
             )
           )
         }
-      {!loader && <div className="lds-dual-ring"></div>}
-      {loader && <div className='flexa paginationbuttondiv'>
-        <button onClick={()=>{setTimeout(()=>{setpagination(pagination-1)},500)}} className={pagination==1?"disabledcolor":""} disabled={pagination==1}>Prev</button>
-        <p className='flexja'>{pagination}-page</p>
-        <button onClick={()=>{setTimeout(()=>{setpagination(pagination+1)},500)}} className={(+totalelementsforpagination/10)===pagination?"disabledcolor":""} disabled={(+totalelementsforpagination/10)===pagination}>Next</button>
-      </div>}
+        {!loader && <div className="lds-dual-ring"></div>}
+        {loader && <div className='flexa paginationbuttondiv'>
+          <button onClick={() => { setTimeout(() => { setpagination(pagination - 1) }, 500) }} className={pagination == 1 ? "disabledcolor" : ""} disabled={pagination == 1}>Prev</button>
+          <p className='flexja'>{pagination}-page</p>
+          <button onClick={() => { setTimeout(() => { setpagination(pagination + 1) }, 500) }} className={(+totalelementsforpagination / 10) === pagination ? "disabledcolor" : ""} disabled={(+totalelementsforpagination / 10) === pagination}>Next</button>
+        </div>}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }
