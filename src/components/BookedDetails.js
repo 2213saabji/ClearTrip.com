@@ -33,7 +33,6 @@ export default function BookedDetails() {
                 }
             )).json();
             setbookeddata(response.data);
-            console.log(response.data)
         } catch (error) {
             alert(error);
         }
@@ -59,7 +58,7 @@ export default function BookedDetails() {
                         {bookedshow == "flights" &&
                             <div className={`flex flexc g10`}>
                                 {bookeddata.map((item, index) => (item.flight && (
-                                    <div className='flightResultcardInner flexa'>
+                                    <div key={index} className='flightResultcardInner flexa'>
                                         <div className='flightResultcardheader flexa flexc g20'>
                                             <div className='flexja g10'>
                                                 <div className='bookingdate'>
@@ -84,7 +83,7 @@ export default function BookedDetails() {
 
                         {bookedshow == "hotels" && <div className={`flex flexc g10`}>
                             {bookeddata.map((item, index) => (item.hotel && (
-                                <div className={`flex flex g10 `}>
+                                <div key={index} className={`flex flex g10 `}>
                                     <div className='bookingdate'>
                                         <p className='nowrap'>Booked At:</p>
                                         <p className={`posteddate nowrap`}>{item.start_date[8]}{item.start_date[9]}{months3char[(parseInt(item.start_date[5] == 1 ? 10 : 0) + parseInt(item.start_date[6])) - 1]}, {item.start_date[0]}{item.start_date[1]}{item.start_date[2]}{item.start_date[3]}</p>
