@@ -87,6 +87,12 @@ export default function Navbar() {
                             <p>Hotels</p>
                         </li>
                     </NavLink>
+                    <NavLink to="/bookeddetails">
+                            <li className='flex' >
+                            <svg viewBox="0 0 14 14" height="16" width="16" className="c-neutral-400"><g fill="none" fillRule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><path fill="currentColor" d="M13,9.46769027 L13,12 C13,12.5522847 12.5522847,13 12,13 L2,13 C1.44771525,13 1,12.5522847 1,12 L1,9.46769027 L13,9.46769027 Z M8.76884248,1.00969027 C9.32112723,1.00969027 9.76884248,1.45740552 9.76884248,2.00969027 L9.768,3.99969027 L12,4 C12.5522847,4 13,4.44771525 13,5 L13,7.96769027 L1,7.96769027 L1,5 C1,4.44771525 1.44771525,4 2,4 L4.268,3.99969027 L4.26884248,2.00969027 C4.26884248,1.45740552 4.71655774,1.00969027 5.26884248,1.00969027 L8.76884248,1.00969027 Z M8.268,2.509 L5.768,2.509 L5.767,3.99969027 L8.267,3.99969027 L8.268,2.509 Z"></path></g></svg>
+                                <p>My Trips</p>
+                            </li>
+                        </NavLink>
                 </ul>
             </nav>
             <div className="flex marginbottomglobal" >
@@ -107,11 +113,12 @@ export default function Navbar() {
                                 <p>Hotels</p>
                             </li>
                         </NavLink>
-                        {/* <NavLink to="/bookeddetails">
+                        <NavLink to="/bookeddetails">
                             <li className='flex' >
-                                <p>booked details</p>
+                            <svg viewBox="0 0 14 14" height="16" width="16" className="c-neutral-400"><g fill="none" fillRule="evenodd"><rect width="14" height="14" fill="#FFF" opacity="0"></rect><path fill="currentColor" d="M13,9.46769027 L13,12 C13,12.5522847 12.5522847,13 12,13 L2,13 C1.44771525,13 1,12.5522847 1,12 L1,9.46769027 L13,9.46769027 Z M8.76884248,1.00969027 C9.32112723,1.00969027 9.76884248,1.45740552 9.76884248,2.00969027 L9.768,3.99969027 L12,4 C12.5522847,4 13,4.44771525 13,5 L13,7.96769027 L1,7.96769027 L1,5 C1,4.44771525 1.44771525,4 2,4 L4.268,3.99969027 L4.26884248,2.00969027 C4.26884248,1.45740552 4.71655774,1.00969027 5.26884248,1.00969027 L8.76884248,1.00969027 Z M8.268,2.509 L5.768,2.509 L5.767,3.99969027 L8.267,3.99969027 L8.268,2.509 Z"></path></g></svg>
+                                <p>My Trips</p>
                             </li>
-                        </NavLink> */}
+                        </NavLink>
                     </ul>
                 </nav>
                 <Outlet />

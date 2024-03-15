@@ -269,6 +269,7 @@
     padding: 10px 20px;
     border-radius: 6px;
     gap: 10px;
+    text-wrap: nowrap;
     box-sizing: border-box;
   }
 }

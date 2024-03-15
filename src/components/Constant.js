@@ -66,6 +66,8 @@ export const datathree=[{img:"https://fastui.cltpstatic.com/image/upload/f_auto,
 {img:"https://fastui.cltpstatic.com/image/upload/f_auto,q_auto,w_410,h_337,dpr_2/offermgmt/images/slider2.png"}
 ]
 
+export const months3char=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
 export function logofinder(item) {
     if ((item.flightID[0] + item.flightID[1]) == "6E") { return logoflights[0]; }
     if ((item.flightID[0] + item.flightID[1]) == "SG") { return logoflights[1]; }
